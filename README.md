@@ -17,3 +17,8 @@
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c56eb366-e9f7-4c03-963f-68936f3f755a" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1883e46b-63fa-4ce6-8046-76c894aca917" />
 <img width="1920" height="1034" alt="image" src="https://github.com/user-attachments/assets/82108881-3ec3-49bb-9bdb-fc101b5b378a" />
+## kiểm tra đã được hay trưa bằng cách truy cập
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/62142019-e398-460b-b199-8b98463f045a" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6b85dd2f-7605-4e8b-a277-43960bd9a380" />
+
+#5
