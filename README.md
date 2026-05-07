@@ -1,6 +1,35 @@
-# bai_tap_03_Phattrienungdungvoimanguonmo
-## Django + MariaDB + phpMyAdmin + Cloudflare Tunnel + domain
+# Môn: Phát triển ứng dụng với mã nguồn mở-TEE0421
 
+# Lớp: 58KTPM
+
+3Bài tập 02:
+
+# SỬ DỤNG DJANGO ĐỂ TẠO WEB QUẢN LÝ TIỆM CẦM ĐỒ
+deadline : 23h59 ngày 09 tháng 5 năm 2026.
+Link gửi bài: Tại đây
+
+# TỔ CHỨC CSDL CHO HỆ THỐNG QUẢN LÝ TIỆM CẦM ĐỒ: viết tay ra giấy, lấy điện thoại chụp lại, upload ảnh lên github (đã nói về các nghiệp vụ trên lớp, ghi bảng)
+
+# SỬ DỤNG DOCKER TRÊN UBUNTU ĐỂ:
+
+## Mariadb : chứa csdl của hệ thống này
+
+## Phpmyadmin: để soi được csdl (chỉ để xem, ko cần tạo bảng từ đây, django sẽ làm hết)
+
+## Django: build 1 docker container (dùng Dockerfile): trên nền python, sử dụng django, nhớ mount thư mục để dễ edit, edit dùng: sudo nano ten_file
+
+## sau khi có 3 service này trong file docker-compose.yml :
+run nó, cấu hình để Django nhận csdl mariadb (sửa file settings.py), cấu hình user login ban đầu, mô tả các bảng trong models.py, .... (đc phép sử dụng AI để làm) => KQ được trang admin, y/c đăng nhập, vào trang admin: cho phép thêm sửa xoá dữ liệu các bảng. các trường là khoá ngoại chỉ việc chọn text (mặc dù là csdl tại trường FK đó lưu ID của PK mà nó tham chiếu : sử dụng phpmyadmin để kiểm chứng)
+chú ý kết hợp ssh để chạy lệnh tác động vào django và sudo nano để edit file.
+sử dụng template (file html, sử dụng cú pháp jinja2), lấy context từ 1 view home_page, để tạo trang liệt kê các con nợ đến hạn mà chưa trả tiền!
+sử dụng cloudflare tunnel để public kết quả lên 1 sub-domain => chụp kết quả
+
+# Hướng dẫn:
+
+# Tạo thư mục để chứa image tự buid cho django
+Vào thư mục đó tạo file tên: Dockerfile (nội dung hỏi AI xem file này cần có nội dung gì, full comment cho từng dòng lệnh trong file này => mục tiêu kép: để hiểu và để hệ thống chạy được)
+AI sẽ nói cần thêm file requirements.txt để cài các thư viện cho python (cài qua lệnh pip) => tạo file requirements.txt với nội dung tưng ứng, trong file này cũng comment được => comment xem thư viện nào dùng để làm gì
+Sau mỗi lần sửa đỏi có thể phải chạy lệnh dạng : docker compose exec TÊN_SERVICE_DJANGO_CỦA_BẠN python manage.py migrate để tác động vào django (còn nhiều lệnh khác chứ ko luôn như này), để django thay đổi csdl hoặc thay đổi cấu hình.
 # A.  Dựa vào ubuntu trước đó ở bài số 1 tiếp tục chạy trên server đó 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e3446248-96ec-4407-af09-2eec8cdabb4d" />
 
@@ -26,31 +55,117 @@
 # E. Cloudflare Tunnel + tên miền 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7c4cd2df-2aa8-464e-bab8-c2d3d6c257cc" />
 
-# F Thực hành tạo website
+# F Thực hành TẠO WEB QUẢN LÝ TIỆM CẦM ĐỒ
 
-## 1.lên ý tưởng và bắt đầu làm
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d9c3e030-2067-4b63-938d-abf91f62ae43" />
+## 1. Tạo file tên: Dockerfile và requirements.txt
 
-### Có thể thầy đã chạy lệnh python manage.py startapp love ở ảnh trên và đã tạo app love
+### Tạo Dockerfile
 
-# 2. Thêm app vào settings.py
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/781a7fd2-d8d8-480d-9842-f9e97a2f190d" />
+### nội dung
+Ý chính:
+FROM → chọn image nền
+WORKDIR → thư mục làm việc
+COPY → copy file/source code
+RUN → chạy lệnh cài thư viện
+EXPOSE → mở port
+CMD → lệnh chạy Django khi container start
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1b23a599-e84f-489b-bf8a-fa4f953c41c8" />
 
-# 3. Chỉnh love/views.py
-<img width="1917" height="1080" alt="image" src="https://github.com/user-attachments/assets/d5f5eb7d-434e-4432-9092-70516fdc3a12" />
+### Tạo requirements.txt
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2d849b79-f6e5-46cd-b111-8ed990359ecd" />
 
-# 4. Chỉnh  love/urls.py
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/036e54e2-f896-4d1b-bc02-163c5e9d11ef" />
+### sửa docker compose trước đó
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b81523b0-1635-4846-b955-c15a3a93a827" />
 
-# 5. Nối URL chính Mở file: mysite/urls.py
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/39554e83-2fc2-4832-88b9-6792c9babc02" />
+### Reset và cập nhật toàn bộ hệ thống
+dùng tập lệnh 
+docker compose down
+docker compose up --build -d
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4358de00-fcff-4a12-9fd9-ba8fe06617a9" />
 
-# 6 Tạo thư mục template
+## 2. Tạo tài khoản admin Django 
 
-##  Lệnh tạo thư mục (mkdir): mkdir -p love/templates/love/
+### Trước tiên tạo bảng cho hệ thống
+lệnh docker-compose exec django python manage.py migrate
+<img width="1891" height="1079" alt="image" src="https://github.com/user-attachments/assets/251b08f2-450c-4ecc-9b2a-8f06e816e0b2" />
 
-## Sau đó :nano love/templates/love/index.html
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b6e1389a-5fd0-4a09-89d3-46636964f5c8" />
+### Sau đó tạo admin
+- dùng lệnh :docker compose exec django python manage.py createsuperuser
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/bb5cc47e-0e4c-4937-86fd-affd12947d21" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9bcf7bd2-4ec8-45bb-9fde-3fef0e5405be" />
 
-# kết quả
-<img width="1914" height="1080" alt="image" src="https://github.com/user-attachments/assets/198171cf-ac5a-4b65-b135-08c473409bf9" />
+## 3. Tạo app TIỆM CẦM ĐỒ
+-lệnh tạo app: docker-compose exec django python manage.py startapp pawnshop
+
+## Khai báo app trong settings.py
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/95b97e0a-6fcb-470d-ac4f-e9d2c375c600" />
+
+## Tạo models
+lệnh nano app/pawnshop/models.py 
+Xóa hết và dán:from django.db import models
+
+class Customer(models.Model):
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=20)
+    address = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
+class Item(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    item_name = models.CharField(max_length=100)
+    loan_amount = models.IntegerField()
+    pawn_date = models.DateField()
+    due_date = models.DateField()
+    returned = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.item_name
+<img width="1917" height="1080" alt="image" src="https://github.com/user-attachments/assets/f00b7b92-0540-49c4-a771-a27fb078fb09" />
+
+### Tạo migration
+lệnh: docker-compose exec django python manage.py makemigrations
+-docker-compose exec django python manage.py migrate
+1. makemigrations (Đóng gói thay đổi)
+Chức năng: Quét các thay đổi trong file models.py và tự động tạo ra các file hướng dẫn (file migration).
+Mục đích: Ghi lại "lịch sử" thay đổi cấu trúc dữ liệu dưới dạng bản nháp.
+2. migrate (Cập nhật Database)
+Chức năng: Áp dụng các file hướng dẫn từ bước trên vào Database thật.
+Mục đích: Trực tiếp tạo bảng, thêm cột hoặc sửa đổi dữ liệu trong hệ quản trị cơ sở dữ liệu (PostgreSQL, MySQL, SQLite...).
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/0843a017-b59b-4f1a-9e7d-1e747cf23789" />
+
+### bảng trong admin
+lệnh: nano app/pawnshop/admin.py
+<img width="1872" height="1080" alt="image" src="https://github.com/user-attachments/assets/d2f592ea-7c62-43a9-ad1a-b97fc129e6da" />
+<img width="1920" height="1070" alt="image" src="https://github.com/user-attachments/assets/bc17039d-f546-44ce-aae6-dcb386800d53" />
+
+### Tạo thư mục template
+lệnh: mkdir -p app/pawnshop/templates
+
+### Tạo file HTML
+lệnh: nano app/pawnshop/templates/home.html
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1d22c9b0-0698-4f1a-aeba-11637c3d8436" />
+
+### Tạo view
+lệnh: nano app/pawnshop/views.py
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/88598b3c-d308-48f6-b02c-2c2ff1b5e9e9" />
+
+### Tạo urls cho app
+lệnh: nano app/pawnshop/urls.py
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/903fafa5-eecf-4e51-a9b1-71e25ccb9498" />
+
+### Kết nối URL chính
+lệnh :nano app/mysite/urls.py
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/322b4d95-da93-4108-8a7a-9c4eed51b170" />
+
+### Restart
+lệnh: docker-compose restart
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/03b39653-437c-4664-984a-fab0137acca7" />
+
+### TEST
+thêm dữ liệu demo
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/22c3a115-0fc4-4444-9260-2913ac3e8300" />
+<img width="1920" height="1079" alt="image" src="https://github.com/user-attachments/assets/5c8865ae-f1c2-4372-9b5a-d02bcf7f9832" />
+
