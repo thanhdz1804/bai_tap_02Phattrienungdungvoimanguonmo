@@ -85,14 +85,9 @@ docker compose up --build -d
 
 ## 2. Tạo tài khoản admin Django 
 
-### Trước tiên tạo bảng cho hệ thống
-lệnh docker-compose exec django python manage.py migrate
-<img width="1891" height="1079" alt="image" src="https://github.com/user-attachments/assets/251b08f2-450c-4ecc-9b2a-8f06e816e0b2" />
-
-### Sau đó tạo admin
 - dùng lệnh :docker compose exec django python manage.py createsuperuser
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/bb5cc47e-0e4c-4937-86fd-affd12947d21" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9bcf7bd2-4ec8-45bb-9fde-3fef0e5405be" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/89df4a10-77d0-453e-ba65-8cd1d7bdce50" />
 
 ## 3. Tạo app TIỆM CẦM ĐỒ
 -lệnh tạo app: docker-compose exec django python manage.py startapp pawnshop
@@ -102,27 +97,7 @@ lệnh docker-compose exec django python manage.py migrate
 
 ## Tạo models
 lệnh nano app/pawnshop/models.py 
-Xóa hết và dán:from django.db import models
 
-class Customer(models.Model):
-    name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=20)
-    address = models.TextField()
-
-    def __str__(self):
-        return self.name
-
-
-class Item(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    item_name = models.CharField(max_length=100)
-    loan_amount = models.IntegerField()
-    pawn_date = models.DateField()
-    due_date = models.DateField()
-    returned = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.item_name
 <img width="1917" height="1080" alt="image" src="https://github.com/user-attachments/assets/f00b7b92-0540-49c4-a771-a27fb078fb09" />
 
 ### Tạo migration
@@ -138,23 +113,27 @@ Mục đích: Trực tiếp tạo bảng, thêm cột hoặc sửa đổi dữ l
 
 ### bảng trong admin
 lệnh: nano app/pawnshop/admin.py
-<img width="1872" height="1080" alt="image" src="https://github.com/user-attachments/assets/d2f592ea-7c62-43a9-ad1a-b97fc129e6da" />
-<img width="1920" height="1070" alt="image" src="https://github.com/user-attachments/assets/bc17039d-f546-44ce-aae6-dcb386800d53" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/84a19572-df11-44d1-84fb-70c25348354c" />
+<img width="1918" height="1080" alt="image" src="https://github.com/user-attachments/assets/3fc7df4c-7344-401a-8fb4-7d117eaac44a" />
+
 
 ### Tạo thư mục template
 lệnh: mkdir -p app/pawnshop/templates
 
 ### Tạo file HTML
 lệnh: nano app/pawnshop/templates/home.html
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1d22c9b0-0698-4f1a-aeba-11637c3d8436" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/91c36e2f-5164-4b86-a7b0-0d295b9407a3" />
+
 
 ### Tạo view
 lệnh: nano app/pawnshop/views.py
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/88598b3c-d308-48f6-b02c-2c2ff1b5e9e9" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b63302af-e3cf-4604-ab9e-e5570ebfc1e1" />
+
 
 ### Tạo urls cho app
 lệnh: nano app/pawnshop/urls.py
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/903fafa5-eecf-4e51-a9b1-71e25ccb9498" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8ce9b225-2403-486a-848e-f126cae8a702" />
+
 
 ### Kết nối URL chính
 lệnh :nano app/mysite/urls.py
@@ -166,6 +145,7 @@ lệnh: docker-compose restart
 
 ### TEST
 thêm dữ liệu demo
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/22c3a115-0fc4-4444-9260-2913ac3e8300" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/cd6341ef-7305-4d62-bcd3-6d794fdd166a" />
+
 <img width="1920" height="1079" alt="image" src="https://github.com/user-attachments/assets/5c8865ae-f1c2-4372-9b5a-d02bcf7f9832" />
 
